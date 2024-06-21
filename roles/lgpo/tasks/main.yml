@@ -1,0 +1,48 @@
+---
+- name: Download Group Policy Objects
+  win_command: powershell.exe -Command "Invoke-WebRequest -Uri 'https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_STIG_GPO_Package_January_2024.zip' -OutFile 'C:\Users\Administrator\Desktop\U_STIG_GPO_Package_January_2024.zip'"
+  args:
+    creates: C:\Users\Administrator\Desktop\U_STIG_GPO_Package_January_2024.zip
+
+- name: Extract U_STIG_GPO_Package_January_2024.zip
+  win_command: powershell.exe -Command "Expand-Archive -Path 'C:\Users\Administrator\Desktop\U_STIG_GPO_Package_January_2024.zip' -DestinationPath 'C:\Users\Administrator\Desktop\U_STIG_GPO_Package_January_2024'"
+  args:
+    creates: C:\Users\Administrator\Desktop\U_STIG_GPO_Package_January_2024
+
+- name: Copy LGPO.zip to target server
+  win_copy:
+    src: LGPO.zip
+    dest: C:\Users\Administrator\Desktop\LGPO.zip
+
+- name: Extract LGPO.zip 
+  win_command: powershell.exe -Command "Expand-Archive -Path 'C:\Users\Administrator\Desktop\LGPO.zip' -DestinationPath 'C:\Users\Administrator\Desktop\LGPO'"
+  args:
+    creates: C:\Users\Administrator\Desktop\LGPO
+# DoD WinSvr 2019 MS STIG User v2r8.html = EEB37588-F373-4298-A0A1-D64821F9F2CC
+# DoD WinSvr 2019 MS STIG Comp v2r8.html = F33517BF-525B-4099-9889-2EBF90A32C43
+# DoD WinSvr 2019 DC STIG Comp v2r8.html = CDA0BAD8-A92F-4717-9BA7-485152818937
+# DoD WinSvr 2019 DC STIG User v2r8.html = BB54F6DB-10EA-413D-B5FE-D7C00F24521F
+- name: Run LGPO for DoD WinSvr 2019 MS STIG User v2r8
+  win_command: "C:\\Users\\Administrator\\Desktop\\LGPO\\LGPO_30\\LGPO.exe /g \"C:\\Users\\Administrator\\Desktop\\U_STIG_GPO_Package_January_2024\\DoD WinSvr 2019 MS and DC v2r8\\GPOs\\{EEB37588-F373-4298-A0A1-D64821F9F2CC}\""
+  when: ansible_distribution == 'Microsoft Windows Server 2019 Standard Evaluation' 
+
+- name: Run LGPO for DoD WinSvr 2019 MS STIG Computer v2r8
+  win_command: "C:\\Users\\Administrator\\Desktop\\LGPO\\LGPO_30\\LGPO.exe /g \"C:\\Users\\Administrator\\Desktop\\U_STIG_GPO_Package_January_2024\\DoD WinSvr 2019 MS and DC v2r8\\GPOs\\{F33517BF-525B-4099-9889-2EBF90A32C43}\""
+  when: ansible_distribution == 'Microsoft Windows Server 2019 Standard Evaluation' 
+
+- name: Run LGPO for DoD WinSvr 2019 DC STIG Computer v2r8
+  win_command: "C:\\Users\\Administrator\\Desktop\\LGPO\\LGPO_30\\LGPO.exe /g \"C:\\Users\\Administrator\\Desktop\\U_STIG_GPO_Package_January_2024\\DoD WinSvr 2019 MS and DC v2r8\\GPOs\\{CDA0BAD8-A92F-4717-9BA7-485152818937}\""
+  when: ansible_distribution == 'Microsoft Windows Server 2019 Standard Evaluation' 
+
+- name: Run LGPO for DoD WinSvr 2019 DC STIG User v2r8.
+  win_command: "C:\\Users\\Administrator\\Desktop\\LGPO\\LGPO_30\\LGPO.exe /g \"C:\\Users\\Administrator\\Desktop\\U_STIG_GPO_Package_January_2024\\DoD WinSvr 2019 MS and DC v2r8\\GPOs\\{BB54F6DB-10EA-413D-B5FE-D7C00F24521F}\""
+  when: ansible_distribution == 'Microsoft Windows Server 2019 Standard Evaluation' 
+
+- name: Execute PowerShell command to run gpupdate /force
+  win_command: powershell.exe -Command "gpupdate /force"
+
+
+
+  
+
+

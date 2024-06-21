@@ -1,0 +1,42 @@
+# Script to execute benchmarks
+
+# Function to execute the benchmark with given parameters
+Function ExecuteBenchmark($benchmarkName)
+{
+    # Construct the full path to cscc.exe
+    $csccPath = "C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\scc_5.8\cscc.exe"
+
+    # Construct the command to disable the benchmark
+    $command = "$csccPath --disableBenchmark $benchmarkName"
+
+    # Execute the command
+    Invoke-Expression $command
+}
+
+# Disable benchmarks
+ExecuteBenchmark "Adobe_Acrobat_Reader_DC_Continuous_Track_STIG"
+ExecuteBenchmark "Cisco_IOS-XE_Router_NDM_STIG"
+ExecuteBenchmark "Cisco_IOS-XE_Router_RTR_STIG"
+ExecuteBenchmark "Google_Chrome_Current_Windows"
+ExecuteBenchmark "IE_11_STIG"
+ExecuteBenchmark "IIS_10-0_Server_STIG"
+ExecuteBenchmark "IIS_10-0_Site_STIG"
+ExecuteBenchmark "IIS_8-5_Server_STIG"
+ExecuteBenchmark "IIS_8-5_Site_STIG"
+ExecuteBenchmark "Microsoft_OneDrive_STIG"
+ExecuteBenchmark "Microsoft_Windows_11_STIG"
+ExecuteBenchmark "MOZ_Firefox_Windows"
+ExecuteBenchmark "MS_Defender_Antivirus"
+ExecuteBenchmark "MS_Dot_Net_Framework"
+ExecuteBenchmark "MS_Edge_STIG"
+ExecuteBenchmark "MS_Office_365_ProPlus_STIG"
+ExecuteBenchmark "MS_Windows_10_STIG"
+ExecuteBenchmark "MS_Windows_Server_2022_STIG"
+ExecuteBenchmark "Windows_2012_DC_STIG"
+ExecuteBenchmark "Windows_2012_MS_STIG"
+ExecuteBenchmark "Windows_Firewall_with_Advanced_Security"
+ExecuteBenchmark "Windows_Server_2016_STIG"
+ExecuteBenchmark "Windows_Server_2019_STIG"
+
+# Enable Windows_Server_2019_STIG benchmark
+#ExecuteBenchmark "Windows_Server_2019_STIG"

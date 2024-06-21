@@ -1,0 +1,34 @@
+---
+- name: Download scc-5.8_Windows_bundle.zip from Cyber.mil
+  win_command: powershell.exe -Command "Invoke-WebRequest -Uri 'https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.8_Windows_bundle.zip' -OutFile 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle.zip'"
+  args:
+    creates: C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle.zip
+
+- name: Extract scc-5.8_Windows_bundle.zip
+  win_command: powershell.exe -Command "Expand-Archive -Path 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle.zip' -DestinationPath 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle'"
+  args:
+    creates: C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle
+
+- name: Extract scc-5.8_Windows.zip
+  win_command: powershell.exe -Command "Expand-Archive -Path 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\scc-5.8_Windows.zip' -DestinationPath 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\'"
+  args:
+    creates: C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\scc_5.8
+
+- name: Copy options2019.xml to target server when Windows Server 2019
+  win_copy:
+    src: options2019.01.xml
+    dest: C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\scc_5.8\options.xml
+  when: ansible_distribution == 'Microsoft Windows Server 2019 Standard Evaluation'  
+
+- name: Copy options2022.01.xml to target server when Windows Server 2022
+  win_copy:
+    src: options2022.01.xml
+    dest: C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\scc_5.8\options.xml
+  when: ansible_distribution == 'Microsoft Windows Server 2022 Standard Evaluation'
+
+- name: Execute PowerShell command to run cscc to generate HTML report,  Report details located at C:/Users/Administrator/SCC/Sessions/
+  win_command: powershell.exe -Command "Invoke-Expression 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\scc_5.8\cscc.exe'"
+
+  
+
+

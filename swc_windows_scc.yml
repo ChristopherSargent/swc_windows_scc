@@ -1,0 +1,14 @@
+---
+  - name: railhead_windows_scc
+    hosts: all
+    gather_facts: yes
+    become_method: runas
+    become: yes
+    become_user: Administrator
+    tasks:
+      - include_role:
+          name: chrome
+      - include_role:
+          name: scc
+      - include_role:
+          name: lgpo

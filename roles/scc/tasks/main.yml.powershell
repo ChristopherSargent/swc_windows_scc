@@ -1,0 +1,83 @@
+---
+- name: Download scc-5.8_Windows_bundle.zip from Cyber.mil
+  win_command: powershell.exe -Command "Invoke-WebRequest -Uri 'https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.8_Windows_bundle.zip' -OutFile 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle.zip'"
+  args:
+    creates: C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle.zip
+
+- name: Extract scc-5.8_Windows_bundle.zip
+  win_command: powershell.exe -Command "Expand-Archive -Path 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle.zip' -DestinationPath 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle'"
+  args:
+    creates: C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle
+
+- name: Extract scc-5.8_Windows.zip
+  win_command: powershell.exe -Command "Expand-Archive -Path 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\scc-5.8_Windows.zip' -DestinationPath 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\'"
+  args:
+    creates: C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\scc_5.8
+
+- name: Copy PowerShell disable_benchmarks script to target server
+  win_copy:
+    src: disable_benchmarks.ps1
+    dest: C:\Users\Administrator\Desktop\disable_benchmarks.ps1
+
+
+- name: Execute PowerShell script to disable all benchmarks
+  ansible.windows.win_powershell:
+    script: |
+      # Script to execute benchmarks
+
+      # Function to execute the benchmark with given parameters
+      Function ExecuteBenchmark($benchmarkName)
+      {
+          # Construct the full path to cscc.exe
+          $csccPath = "C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\scc_5.8\cscc.exe"
+
+          # Construct the command to disable the benchmark
+          $command = "$csccPath --disableBenchmark $benchmarkName"
+
+          # Execute the command
+          Invoke-Expression $command
+      }
+
+      # Disable benchmarks
+      ExecuteBenchmark "Adobe_Acrobat_Reader_DC_Continuous_Track_STIG"
+      ExecuteBenchmark "Cisco_IOS-XE_Router_NDM_STIG"
+      ExecuteBenchmark "Cisco_IOS-XE_Router_RTR_STIG"
+      ExecuteBenchmark "Google_Chrome_Current_Windows"
+      ExecuteBenchmark "IE_11_STIG"
+      ExecuteBenchmark "IIS_10-0_Server_STIG"
+      ExecuteBenchmark "IIS_10-0_Site_STIG"
+      ExecuteBenchmark "IIS_8-5_Server_STIG"
+      ExecuteBenchmark "IIS_8-5_Site_STIG"
+      ExecuteBenchmark "Microsoft_OneDrive_STIG"
+      ExecuteBenchmark "Microsoft_Windows_11_STIG"
+      ExecuteBenchmark "MOZ_Firefox_Windows"
+      ExecuteBenchmark "MS_Defender_Antivirus"
+      ExecuteBenchmark "MS_Dot_Net_Framework"
+      ExecuteBenchmark "MS_Edge_STIG"
+      ExecuteBenchmark "MS_Office_365_ProPlus_STIG"
+      ExecuteBenchmark "MS_Windows_10_STIG"
+      ExecuteBenchmark "MS_Windows_Server_2022_STIG"
+      ExecuteBenchmark "Windows_2012_DC_STIG"
+      ExecuteBenchmark "Windows_2012_MS_STIG"
+      ExecuteBenchmark "Windows_Firewall_with_Advanced_Security"
+      ExecuteBenchmark "Windows_Server_2016_STIG"
+      ExecuteBenchmark "Windows_Server_2019_STIG"
+
+      # Enable Windows_Server_2019_STIG benchmark
+      #ExecuteBenchmark "Windows_Server_2019_STIG"
+
+  #- name: Execute PowerShell script to diasble all benchmarks
+  #win_command: powershell.exe -ExecutionPolicy Bypass -File C:\Users\Administrator\Desktop\disable_benchmarks.ps1
+
+  #- name: Execute PowerShell command to enable Windows_Server_2019_STIG benchmark
+  #win_command: powershell.exe -Command "Invoke-Expression 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\scc_5.8\cscc.exe --enableBenchmark Windows_Server_2019_STIG'"
+  
+  #- name: Execute PowerShell command to set MAC-1_Classified profile on benchmark
+  #win_command: powershell.exe -Command "Invoke-Expression 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\scc_5.8\cscc.exe --setProfile MAC-1_Classified Windows_Server_2019_STIG'"
+
+  #- name: Execute PowerShell command to run cscc to generate HTML report,  Report details located at C:/Users/Administrator/SCC/Sessions/
+  #win_command: powershell.exe -Command "Invoke-Expression 'C:\Users\Administrator\Desktop\scc-5.8_Windows_bundle\scc-5.8_Windows\scc_5.8\cscc.exe'"
+
+  
+
+
