@@ -1,6 +1,6 @@
 ![alt text](swclogo.jpg)
 # swc_windows_scc
-* This repository contains playbooks to install chrome and SCC to perform compliance SCAP scan at the Windows_Server_2019_STIG/MS_Windows_Server_2022_STIG benchmark with the MAC-1_Classified profile set. Originally developed for Railhead For any additional details or inquiries, please contact me at christopher.sargent@sargentwalker.io.
+* This repository contains playbooks to install chrome and SCC to perform compliance SCAP scan at the Windows_Server_2019_STIG/MS_Windows_Server_2022_STIG benchmark with the MAC-1_Classified profile set. Originally developed for Railhead. For any additional details or inquiries, please contact me at christopher.sargent@sargentwalker.io.
 
 * [SCC](https://www.niwcatlantic.navy.mil/Technology/SCAP/)
 * [SCAP Content Repository](https://www.niwcatlantic.navy.mil/Technology/SCAP/SCAP-Content-Repository/)
