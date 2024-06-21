@@ -4,7 +4,7 @@
 
 * [SCC](https://www.niwcatlantic.navy.mil/Technology/SCAP/)
 * [SCAP Content Repository](https://www.niwcatlantic.navy.mil/Technology/SCAP/SCAP-Content-Repository/)
-* [Setting up a Windows HOst Ansible](https://docs.ansible.com/ansible/latest/os_guide/windows_setup.html)
+* [Setting up a Windows Host Ansible](https://docs.ansible.com/ansible/latest/os_guide/windows_setup.html)
 * [ansible.windows](https://galaxy.ansible.com/ui/repo/published/ansible/windows/docs/)
 
 * Tested on Windows Server 2019/2022
