@@ -6,6 +6,7 @@
 * [SCAP Content Repository](https://www.niwcatlantic.navy.mil/Technology/SCAP/SCAP-Content-Repository/)
 * [Setting up a Windows Host Ansible](https://docs.ansible.com/ansible/latest/os_guide/windows_setup.html)
 * [ansible.windows](https://galaxy.ansible.com/ui/repo/published/ansible/windows/docs/)
+* [LGPO](https://learn.microsoft.com/en-us/windows/security/operating-system-security/device-management/windows-security-configuration-framework/security-compliance-toolkit-10)
 
 * Tested on Windows Server 2019/2022
 # Prerequisites 
